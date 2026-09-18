@@ -1,0 +1,11 @@
+services:
+  saddle-stitch-checker:
+    build: .
+    image: saddle-stitch-checker:latest
+    container_name: saddle-stitch-checker
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped

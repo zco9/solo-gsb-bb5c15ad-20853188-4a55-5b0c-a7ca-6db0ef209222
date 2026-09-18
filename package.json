@@ -1,0 +1,16 @@
+{
+  "name": "saddle-stitch-checker",
+  "version": "1.0.0",
+  "description": "骑马钉小册子拼版检查 Web 应用",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>骑马钉小册子拼版检查</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>骑马钉小册子拼版检查</h1>
+      <p class="subtitle">
+        输入成品页数，自动补齐为 4 的倍数并生成每张纸正 / 反面的左右页码与空白版位。
+        点选任意两个版位即可交换；系统实时检查重复页、缺页与同张正反配对异常，存在错误时禁止导出 CSV。
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="control-bar" aria-label="参数与操作">
+      <div class="field">
+        <label for="pagesInput">成品页数</label>
+        <input id="pagesInput" type="number" min="1" max="120" step="1" value="8" inputmode="numeric">
+      </div>
+      <button id="regenerateBtn" type="button" class="btn btn-primary">生成拼版</button>
+      <div class="spacer"></div>
+      <button id="swapDemoBtn" type="button" class="btn" title="随机交换几个版位，制造可检查的异常">制造异常示例</button>
+      <button id="resetBtn" type="button" class="btn">恢复标准拼版</button>
+      <button id="exportBtn" type="button" class="btn btn-success" disabled>导出 CSV</button>
+    </section>
+
+    <section class="summary" id="summary" aria-live="polite"></section>
+    <section class="issues-panel" id="issuesPanel" aria-live="polite" hidden></section>
+
+    <p class="swap-hint" id="swapHint">
+      操作：点击第一个版位选中（高亮），再点击另一个版位即可交换两者内容；按 Esc 取消选择。
+      也可用每个版位内的下拉框直接指定页码或空白。
+    </p>
+
+    <section class="sheets" id="sheets" aria-label="纸张嵌套顺序预览"></section>
+
+    <section class="formula-note">
+      <h2>拼版规则说明</h2>
+      <ul>
+        <li>一张纸对折后产生 4 个版位：<strong>正面左 / 正面右</strong> 与 <strong>反面左 / 反面右</strong>。</li>
+        <li>预览按装订后的嵌套顺序排列：第 1 张为最外层，依次向内，最后一张为中缝最里层。</li>
+        <li>第 s 张纸（共 N 页，已补齐为 4 的倍数）：
+          正面 = <code>N−2(s−1) | 2s−1</code>，反面 = <code>2s | N−2s+1</code>；
+          同一面左右两码之和恒为 <code>N+1</code>。
+        </li>
+        <li>空白页统一补在文档末尾（页码 P+1…N），版位中以「空白」标记。</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">骑马钉拼版检查工具 · Node.js + Express · 原生前端</div>
+  </footer>
+
+  <script src="/imposition.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
